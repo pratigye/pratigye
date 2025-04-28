@@ -1,0 +1,81 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    struct node *lchild;
+    int data;
+    struct node *rchild;
+};
+
+struct node *insert(struct node *t,int x)
+{
+    struct node *ptr=NULL;
+    struct node *A;
+    while(t!=NULL)
+    {
+        ptr=t;
+        if(t->data == x)
+            return t;
+        else if (x < t->data)
+            t = t->lchild;
+        else
+            t = t->rchild;
+    }
+    A = (struct node *)malloc(sizeof(struct node));
+    A->data = x;
+    A->lchild=NULL,A->rchild=NULL;
+    if(A->data < ptr->data)
+        ptr->lchild = A;
+    else
+        ptr->rchild = A;
+
+    return t;
+}
+
+void display(struct node *A)
+{
+    if(A!=NULL)
+    {
+        printf("%d ",A->data);
+        display(A->lchild);
+        display(A->rchild);
+    }
+}
+struct node *search(struct node *t, int x)
+{
+    while(t!=NULL)
+    {
+        if(t->data == x)
+            return t;
+        else if (x < t->data)
+            t = t->lchild;
+        else
+            t = t->rchild;
+    }
+    return NULL;
+}
+
+int main ()
+{
+    struct node *tree;
+    tree = insert(tree,12);
+    tree = insert(tree,3);
+    tree = insert(tree,2);
+    tree = insert(tree,31);
+    tree = insert(tree,15);
+    tree = insert(tree,17);
+    tree = insert(tree,11);
+    tree = insert(tree,1);
+    tree = insert(tree,17);
+    tree = insert(tree,19);
+    tree = insert(tree,5);
+    tree = insert(tree,54);
+    tree = insert(tree,40);
+    tree = insert(tree,0);
+    tree = insert(tree,77);
+    display(tree);
+
+    printf("\nElement: %d",search(tree,40));
+    return 0;
+}
