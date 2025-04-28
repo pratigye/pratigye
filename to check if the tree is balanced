@@ -1,0 +1,71 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node {
+    int data;
+    struct node *rchild;
+    struct node *lchild;
+};
+struct node *create()
+{
+    int x,z,num;
+    char choice;
+    struct node *A;
+    printf("Enter value of first node: \n");
+    scanf("%d",&x);
+    A=(struct node *)malloc(sizeof(struct node));
+    A->rchild = NULL;
+    A->data = x;
+    A->lchild = NULL;
+    printf("Enter how many nodes you want to store in tree: \n");
+    scanf("%d",&num);
+    struct node *B;
+    struct node *C=A;
+    struct node *parent;
+    for (int i=1; i<num; i++)
+    {
+        parent = C;
+        printf("Enter where you want to add new node ('r' for 'right' or 'l' for 'left'):\n");
+        scanf(" %c",&choice);
+        printf("Enter value of node: \n");
+        scanf("%d",&z);
+        B = (struct node *)malloc(sizeof(struct node));
+        B->data =z;
+        B->rchild = NULL;
+        B->lchild = NULL;
+        if(choice == 'r')
+        {
+            C->rchild = B;
+        }
+        else if(choice == 'l')
+        {
+            C->lchild = B;
+        }
+        else
+        {
+            printf("Invalid choice...\n");
+            free(B);
+            i--;
+        }
+    }
+    return A;
+}
+
+int balance(struct node *A)
+{
+    int x,y;
+    if(A==NULL)
+        return 0;
+    x = height(A->lchild);
+    y = height(A->rchild);
+    if(x-y == -1 || x-y == 0 || x-y == 1)
+        printf("\nTree is balance..");
+    else
+        printf("\nTree is not balance..");
+}
+int main ()
+{
+    struct node *root;
+    root = create();
+    balance(root);
+    return 0;
+}
